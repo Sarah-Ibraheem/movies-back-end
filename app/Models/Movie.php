@@ -10,7 +10,7 @@ class Movie extends Model
     use HasFactory;
     protected $fillable = [
         'title',
-        'category_id',
+        'category',
         'video_url',
         'production_year',
         'director',
@@ -20,11 +20,6 @@ class Movie extends Model
         'duration',
         'evaluation',
         'long_description',
-        'short_description',
     ];
 
-    public function category()
-    {
-        return $this->belongsTo('App\Category');
-    }
 }

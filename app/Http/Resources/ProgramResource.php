@@ -17,7 +17,7 @@ class ProgramResource extends JsonResource
         return [
             'id'  => $this->id,
             'title'  => $this->title,
-            'category_id'  =>  new CategoryResource($this->category),
+            'category'  =>  $this->category,
             'video_url'  => $this->video_url,
             'production_year'  => $this->production_year,
             'director'  => $this->director,
@@ -27,7 +27,6 @@ class ProgramResource extends JsonResource
             'duration'  => $this->duration,
             'evaluation'  => $this->evaluation,
             'long_description'  => $this->long_description,
-            'short_description'  => $this->short_description,
             ];
     }
 }

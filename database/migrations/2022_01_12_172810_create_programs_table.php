@@ -17,7 +17,6 @@ class CreateProgramsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('title');
-            $table->mediumText('short_description');
             $table->longText('long_description');
             $table->decimal('evaluation');
             $table->string('duration');
@@ -27,7 +26,7 @@ class CreateProgramsTable extends Migration
             $table->string('director');
             $table->string('production_year');
             $table->mediumText('video_url');
-            $table->unsignedBigInteger('category_id');
+            $table->string('category');
         });
     }
 

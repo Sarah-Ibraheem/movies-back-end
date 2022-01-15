@@ -25,6 +25,4 @@ Route::resource('movies', MovieController::class);
 
 Route::resource('programs', ProgramController::class);
 
-Route::get('/categories', [CategoryController::class,'index']);
-
 
