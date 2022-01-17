@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Movie;
 
 use App\Http\Resources\MovieResource;
+use App\Http\Requests\MovieRequest;
+
 
 class MovieController extends Controller
 {
@@ -30,7 +32,10 @@ class MovieController extends Controller
         return ["error"=>"movie not found"];
     }
 
-    public function store(Request $request){
+    public function store(MovieRequest $request){
+        $request->validate([
+            'image'  => 'image|mimes:png,jpg,jpeg',
+        ]);
         $movie=$request->only(['title',
         'category',
         'video_url',
@@ -58,7 +63,7 @@ class MovieController extends Controller
         return ["error"=>"couldn't create movie"];
     }
 
-    public function update(Request $request,$id)
+    public function update(MovieRequest $request,$id)
 	{
         $movie =  Movie::find($id);
         $updatedMovie=$request->only(['title',
@@ -71,6 +76,7 @@ class MovieController extends Controller
         'duration',
         'evaluation',
         'long_description']);
+
         if($request -> hasFile('image')){
             $file = public_path()."/storage/movies_cover/".$movie->image;
             if (file_exists($file)) {

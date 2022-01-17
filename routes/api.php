@@ -35,13 +35,14 @@ Route::get('programs/{program}', [ProgramController::class,'show']);
 Route::get('programs/images/{image}', [ProgramImageController::class,'show']);
 Route::get('programs/search/{title}', [ProgramController::class,'search']);
 
-// Route::group(['middleware'=>['auth:sanctum']], function () {
-    Route::post('/logout', [AuthController::class, 'logout']);
+ Route::group(['middleware'=>['auth:sanctum']], function () {
+    Route::get('/logout', [AuthController::class, 'logout']);
+});
     Route::post('movies', [MovieController::class,'store']);
-    Route::put('movies/{movie}', [MovieController::class,'update']);
+    Route::post('movies/{movie}', [MovieController::class,'update']);
     Route::delete('movies/{movie}', [MovieController::class,'destroy']);
     Route::post('programs', [ProgramController::class,'store']);
     Route::put('programs/{program}', [ProgramController::class,'update']);
     Route::delete('programs/{program}', [ProgramController::class,'destroy']);
-// });
+
 
