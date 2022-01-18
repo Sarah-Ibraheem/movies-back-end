@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Str;
 
 class ProgramResource extends JsonResource
 {
@@ -27,6 +28,7 @@ class ProgramResource extends JsonResource
             'duration'  => $this->duration,
             'evaluation'  => $this->evaluation,
             'long_description'  => $this->long_description,
+            'short_description'  => Str::substr($ $this->long_description, 0, 25),
             ];
     }
 }

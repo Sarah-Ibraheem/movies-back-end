@@ -22,6 +22,16 @@ class MovieController extends Controller
         return $movies;
     }
 
+    public function indexAll()
+    {
+        $movies=MovieResource::collection(
+            Movie::all()
+        );
+        if($movies->isEmpty())
+            return ["error"=>"no movies found"];
+        return $movies;
+    }
+
     public function show($movie)
     {
         $movie =  Movie::find($movie);
@@ -32,10 +42,7 @@ class MovieController extends Controller
         return ["error"=>"movie not found"];
     }
 
-    public function store(MovieRequest $request){
-        $request->validate([
-            'image'  => 'image|mimes:png,jpg,jpeg',
-        ]);
+    public function store(MovieRequest $request){       
         $movie=$request->only(['title',
         'category',
         'video_url',
@@ -48,6 +55,7 @@ class MovieController extends Controller
         'long_description']);
 
         if($request -> hasFile('image')){
+           
             $compeleteFileName = $request->file('image')->getClientOriginalName();
             $fileNameOnly = pathinfo($compeleteFileName,PATHINFO_FILENAME);
             $extension = $request->file('image')->getClientOriginalExtension();
@@ -119,4 +127,13 @@ class MovieController extends Controller
             return ["error"=>"no movies found"];
         return $movies;
     }
+
+    public function getPageNumbers()
+    {
+        $movies_count= Movie::all()->count();
+        if($movies_count==0)
+            return ["error"=>0];
+        return (ceil($movies_count/ 12));
+    }
+
 }

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\ProgramRequest;
+use App\Models\Program;
 
 class ProgramController extends Controller
 {
@@ -16,6 +18,17 @@ class ProgramController extends Controller
         return $programs;
     }
 
+    public function indexAll()
+    {
+        $programs=ProgramResource::collection(
+            Program::all()
+        );
+        if($programs->isEmpty())
+            return ["error"=>"no programs found"];
+        return $programs;
+    }
+
+
     public function show($program)
     {
         $program =  Program::find($program);
@@ -26,7 +39,7 @@ class ProgramController extends Controller
         return ["error"=>"program not found"];
     }
 
-    public function store(Request $request){
+    public function store(ProgramRequest $request){
         $program=$request->only(['title',
         'category',
         'video_url',
@@ -54,7 +67,7 @@ class ProgramController extends Controller
         return ["error"=>"couldn't create Program"];
     }
 
-    public function update(Request $request,$id)
+    public function update(ProgramRequest $request,$id)
 	{
         $program =  Program::find($id);
         $updatedProgram=$request->only(['title',
@@ -109,4 +122,13 @@ class ProgramController extends Controller
             return ["error"=>"no programs found"];
         return $programs;
     }
+
+    public function getPageNumbers()
+    {
+        $programs_count= Program::all()->count();
+        if($programs_count==0)
+            return ["error"=>0];
+        else 
+        return (ceil($programs_count/ 12));
+        }
 }
