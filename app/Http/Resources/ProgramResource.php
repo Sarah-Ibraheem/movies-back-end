@@ -25,10 +25,10 @@ class ProgramResource extends JsonResource
             'subtitle_language'  => $this->subtitle_language,
             'Original_language'  => $this->Original_language,
             'image'  => $this->image,
+            'evaluation'  => floor( $this->evaluation ) != $this->evaluation ? $this->evaluation: floor( $this->evaluation ),
             'duration'  => $this->duration,
-            'evaluation'  => $this->evaluation,
             'long_description'  => $this->long_description,
-            'short_description'  => Str::substr($ $this->long_description, 0, 25),
+            'short_description'  => Str::substr($this->long_description, 0, 25),
             ];
     }
 }

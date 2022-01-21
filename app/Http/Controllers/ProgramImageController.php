@@ -11,7 +11,7 @@ class ProgramImageController extends Controller
         if (file_exists($file)) {
             return \Response::download($file,$image);
         } else {
-            return ["error"=>"error image not found"];
+            return ["error"=>"الصوره غير موجوده"];
         }
     }
 }

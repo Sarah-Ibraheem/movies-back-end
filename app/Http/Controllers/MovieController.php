@@ -18,7 +18,7 @@ class MovieController extends Controller
             Movie::paginate(12)
         );
         if($movies->isEmpty())
-            return ["error"=>"no movies found"];
+            return ["error"=>"لا يوجد أفلام"];
         return $movies;
     }
 
@@ -28,7 +28,7 @@ class MovieController extends Controller
             Movie::all()
         );
         if($movies->isEmpty())
-            return ["error"=>"no movies found"];
+            return ["error"=>"لا يوجد أفلام"];
         return $movies;
     }
 
@@ -39,7 +39,7 @@ class MovieController extends Controller
         if($movie)
             return new MovieResource($movie);
 
-        return ["error"=>"movie not found"];
+        return ["error"=>"الفيلم غير موجود"];
     }
 
     public function store(MovieRequest $request){       
@@ -67,8 +67,8 @@ class MovieController extends Controller
         $newMovie = Movie::create($movie);
 
         if($newMovie) 
-            return ["data"=>"success"];
-        return ["error"=>"couldn't create movie"];
+            return ["data"=>"تمت الإضافه بنجاح"];
+        return ["error"=>"عذرا , حدث خطأ أثناء إنشاء الفيلم"];
     }
 
     public function update(MovieRequest $request,$id)
@@ -102,8 +102,7 @@ class MovieController extends Controller
         $newMovie=$movie->update($updatedMovie);
         if($newMovie) 
           return $movie;
-        return ["error"=>"couldn't Update movie"];
-
+        return ["error"=>"عذرا , حدث خطأ أثناء تعديل الفيلم"];
 	}
 
     public function destroy($id)
@@ -114,17 +113,17 @@ class MovieController extends Controller
         if (file_exists($file)) {
             \File::delete($file);
         }
-        return ["data"=>"success"];}
-      return ["error"=>"couldn't delete movie"];
+        return ["data"=>"تم الحذف بنجاح "];}
+      return ["error"=>"عذرا , حدث خطأ أثناء حذف الفيلم"];
 	}
 
     public function search($title)
 	{
         $movies=MovieResource::collection(
-            Movie::where('title','like','%'.$title.'%')->get()
+            Movie::where('title','like','%'.$title.'%')->paginate(12)       
         );
         if($movies->isEmpty())
-            return ["error"=>"no movies found"];
+            return ["error"=>"لا يوجد أفلام وفقا لمحددات بحثك"];
         return $movies;
     }
 

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProgramRequest;
 use App\Models\Program;
+use App\Http\Resources\ProgramResource;
+
 
 class ProgramController extends Controller
 {
@@ -14,7 +16,7 @@ class ProgramController extends Controller
             Program::paginate(12)
         );
         if($programs->isEmpty())
-            return ["error"=>"no programs found"];
+           return ["error"=>"لا يوجد برامج"];
         return $programs;
     }
 
@@ -24,7 +26,7 @@ class ProgramController extends Controller
             Program::all()
         );
         if($programs->isEmpty())
-            return ["error"=>"no programs found"];
+            return ["error"=>"لا يوجد برامج"];
         return $programs;
     }
 
@@ -36,7 +38,7 @@ class ProgramController extends Controller
         if($program)
             return new ProgramResource($program);
 
-        return ["error"=>"program not found"];
+        return ["error"=>"البرنامج غير موجود"];
     }
 
     public function store(ProgramRequest $request){
@@ -63,8 +65,8 @@ class ProgramController extends Controller
         $newProgram = Program::create($program);
 
         if($newProgram) 
-            return ["data"=>"success"];
-        return ["error"=>"couldn't create Program"];
+            return ["data"=>"تمت الإضافه بنجاح"];
+        return ["error"=>"عذرا , حدث خطأ أثناء إنشاء البرنامج"];
     }
 
     public function update(ProgramRequest $request,$id)
@@ -97,7 +99,7 @@ class ProgramController extends Controller
         $newProgram=$program->update($updatedProgram);
         if($newProgram) 
           return $program;
-        return ["error"=>"couldn't Update program"];
+        return ["error"=>"عذرا , حدث خطأ أثناء تعديل البرنامج"];
 
 	}
 
@@ -109,17 +111,17 @@ class ProgramController extends Controller
         if (file_exists($file)) {
             \File::delete($file);
         }
-        return ["data"=>"success"];}
-      return ["error"=>"couldn't delete program"];
+        return ["data"=>"تم الحذف بنجاح "];}
+      return ["error"=>"عذرا , حدث خطأ أثناء حذف البرنامج"];
 	}
 
     public function search($title)
 	{
         $programs=ProgramResource::collection(
-            Program::where('title','like','%'.$title.'%')->get()
+            Program::where('title','like','%'.$title.'%')->paginate(12)
         );
         if($programs->isEmpty())
-            return ["error"=>"no programs found"];
+          return ["error"=>"لا يوجد برامج وفقا لمحددات بحثك"];
         return $programs;
     }
 
