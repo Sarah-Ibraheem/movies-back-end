@@ -120,7 +120,7 @@ class MovieController extends Controller
     public function search($title)
 	{
         $movies=MovieResource::collection(
-            Movie::where('title','like','%'.$title.'%')->paginate(12)       
+            Movie::where('title','like','%'.$title.'%')->paginate(12)
         );
         if($movies->isEmpty())
             return ["error"=>"لا يوجد أفلام وفقا لمحددات بحثك"];
