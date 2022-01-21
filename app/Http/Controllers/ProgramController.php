@@ -117,7 +117,7 @@ class ProgramController extends Controller
     public function search($title)
 	{
         $programs=ProgramResource::collection(
-            Program::where('title','like','%'.$title.'%')->get()
+            Program::where('title','like','%'.$title.'%')->paginate(12)
         );
         if($programs->isEmpty())
             return ["error"=>"no programs found"];
